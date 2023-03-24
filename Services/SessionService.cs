@@ -11,11 +11,6 @@ public class SessionService
     public async Task<SessionModel> GetByIdAsync(Guid id)
     {
         var result = await _repository.ReadAsync(id);
-        if (result == null)
-        {
-            //TODO: изменить ReadAsync убрать возможность null
-        }
-
         return result;
     }
 
@@ -27,11 +22,6 @@ public class SessionService
         if (result == null)
         {
             result = await _repository.CreateAsync(CreateSession);
-            
-            if (result == null)
-            {
-                //TODO: изменить CreateAsync убрать возможность null
-            }
         }
 
         return result;
