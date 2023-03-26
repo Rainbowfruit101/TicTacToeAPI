@@ -1,4 +1,4 @@
-﻿using Database.Repositories;
+﻿using Database;
 using Models;
 using Models.Enums;
 
@@ -6,8 +6,13 @@ namespace Services;
 
 public class SessionService
 {
-    private readonly SessionCrudRepository _repository;
+    private readonly ICrudRepository<TicTacToeDbContext, SessionModel> _repository;
 
+    public SessionService(ICrudRepository<TicTacToeDbContext, SessionModel> repository)
+    {
+        _repository = repository;
+    }
+    
     public async Task<SessionModel> GetByIdAsync(Guid id)
     {
         var result = await _repository.ReadAsync(id);

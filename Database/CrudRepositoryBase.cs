@@ -20,7 +20,7 @@ public abstract class CrudRepositoryBase<TEntity>: ICrudRepository<TicTacToeDbCo
 
     public async Task<IEnumerable<TEntity>> ReadAllAsync() => await GetQueryable().ToArrayAsync();
 
-    public async Task<TEntity> CreateAsync(Func<Guid, TEntity?> entityProducer)
+    public async Task<TEntity> CreateAsync(Func<Guid, TEntity> entityProducer)
     {
         var entity = entityProducer.Invoke(Guid.NewGuid());
         if (entity == null)

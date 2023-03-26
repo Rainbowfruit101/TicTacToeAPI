@@ -3,9 +3,9 @@ using Models;
 
 namespace Database.Repositories;
 
-public class SessionCrudRepository : CrudRepositoryBase<SessionModel>
+public class SessionsCrudRepository : CrudRepositoryBase<SessionModel>
 {
-    public SessionCrudRepository(TicTacToeDbContext dbContext) : base(dbContext)
+    public SessionsCrudRepository(TicTacToeDbContext dbContext) : base(dbContext)
     {
     }
 
