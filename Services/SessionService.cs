@@ -12,7 +12,7 @@ public class SessionService
     {
         _repository = repository;
     }
-    
+
     public async Task<SessionModel> GetByIdAsync(Guid id)
     {
         var result = await _repository.ReadAsync(id);
@@ -58,6 +58,18 @@ public class SessionService
             State = SessionState.Pending,
             Cells = CreateCells()
         };
+    }
+
+    public async Task<SessionModel> Update(SessionModel source)
+    {
+        var session = _repository.GetQueryable().FirstOrDefault(s => s.Id == source.Id);
+        
+        if (session==null)
+        {
+            throw new Exception();
+        }
+
+        return await _repository.UpdateAsync(source);
     }
 
     private CellModel[] CreateCells()

@@ -30,11 +30,11 @@ public class PlayerService
     {
         if (!Regex.IsMatch(email, EmailRegexp, RegexOptions.IgnoreCase))
         {
-            throw new WrongEmailException(email);
+            throw new InvalidEmailException(email);
         }
         if (!Regex.IsMatch(password, PasswordRegexp, RegexOptions.None))
         {
-            throw new InvalidPasswordFormatException(password);
+            throw new InvalidPasswordFormatException();
         }
 
         var existingPlayer = await _repository.GetQueryable().FirstOrDefaultAsync(player => player.Email == email);
@@ -65,12 +65,12 @@ public class PlayerService
 
         if (player == null)
         {
-            throw new NotRegisterPlayerException(email);
+            throw new NotRegisteredPlayerException(email);
         }
 
         if (player.Password != password)
         {
-            throw new WrongPasswordException(password);
+            throw new WrongPasswordException();
         }
 
         var token = Tokenize(email, password);
@@ -86,7 +86,7 @@ public class PlayerService
         }
         if (!Regex.IsMatch(source.Password, PasswordRegexp, RegexOptions.Singleline))
         {
-            throw new InvalidPasswordFormatException(source.Password);
+            throw new InvalidPasswordFormatException();
         }
 
         return await _repository.UpdateAsync(source);
@@ -112,7 +112,7 @@ public class PlayerService
         var credentialsParts = credentials.Split(":");
         if (credentialsParts.Length != 2)
         {
-            throw new InvalidTokenException(token);
+            throw new InvalidTokenException();
         }
 
         var email = credentialsParts[0];
@@ -122,14 +122,20 @@ public class PlayerService
 
         if (player == null)
         {
-            throw new NotRegisterPlayerException(email);
+            throw new NotRegisteredPlayerException(email);
         }
 
         if (player.Password != password)
         {
-            throw new WrongPasswordException(password);
+            throw new WrongPasswordException();
         }
 
         return player;
+    }
+
+    public async Task<PlayerModel> Delete(string token)
+    {
+        var player = await Detokenize(token);
+        return await _repository.DeleteAsync(player.Id);
     }
 }

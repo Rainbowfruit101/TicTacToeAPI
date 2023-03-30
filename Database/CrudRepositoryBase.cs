@@ -52,6 +52,7 @@ public abstract class CrudRepositoryBase<TEntity>: ICrudRepository<TicTacToeDbCo
     public async Task<TEntity> DeleteAsync(Guid id)
     {
          var entity = await ReadAsync(id);
+         GetDbSet().Remove(entity);
          await DbContext.SaveChangesAsync();
          return entity;
     }
