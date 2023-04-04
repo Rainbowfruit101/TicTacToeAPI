@@ -1,4 +1,4 @@
-namespace Services.Exceptions;
+namespace WebApi.Exceptions;
 
 public class WrongPasswordException : Exception
 {

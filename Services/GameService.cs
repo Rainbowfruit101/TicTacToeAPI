@@ -1,7 +1,7 @@
 using Database;
 using Models;
 using Models.Enums;
-using Models.Exceptions;
+using Services.Exceptions;
 
 namespace Services;
 

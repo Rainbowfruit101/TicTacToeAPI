@@ -13,27 +13,15 @@ public class PlayerController : Controller
         _service = service;
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(string token)
-    {
-        return Json(await _service.GetByToken(token));
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Add([FromBody] string email, string password)
-    {
-        return Json(await _service.Register(email, password));
-    }
-
     [HttpPatch("{id}")]
     public async Task<IActionResult> Update(string token, [FromBody] PlayerModel player)
     {
-        return Json(await _service.Update(token, player));
+        return Json(await _service.Update(player));
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string token)
+    [HttpGet("{id}")]
+    public async Task<PlayerModel> GetUser(Guid id)
     {
-        return Json(await _service.Delete(token));
+        return await _service.ReadAsync(id);
     }
 }

@@ -1,4 +1,4 @@
-namespace Models.Exceptions;
+namespace Services.Exceptions;
 
 public class InvalidPositionException : Exception
 {
